@@ -1,19 +1,25 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
-import * as actions from './actions';
-import * as getters from './getters';
-import * as mutations from './mutations';
+import actions from './actions';
+import getters from './getters';
+import mutations from './mutations';
 
-Vue.use(Vuex)
+Vue.use(Vuex);
 
 const state = {
-
-}
-
+  board: {
+    colors: {
+      light: '#efd9b7',
+      dark: '#b48866',
+    },
+    threeDee: true,
+  },
+  moves: [],
+};
 
 export default new Vuex.Store({
   state,
   getters,
   actions,
-  mutations
-})
+  mutations,
+});
