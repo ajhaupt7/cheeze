@@ -1,18 +1,18 @@
 <template>
-  <div class="board">
+  <section class="board">
     <div
-      v-for = "(rank, i) in ranks"
+      v-for = "(file, i) in files"
       :key  = "i"
       class = "ranks"
     >
       <square
-        v-for  = "(file, j) in files"
+        v-for  = "(rank, j) in ranks"
         :key   = "i + j"
         :file  = "file"
         :rank  = "rank"
       />
     </div>
-  </div>
+  </section>
 </template>
 
 <script>
