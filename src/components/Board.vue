@@ -33,16 +33,24 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import '../assets/styles/variables.scss';
+
 .board {
-  width: 800px;
-  height: 800px;
-  display: flex;
+  width: 50vw;
+  height: 50vw;
+  max-width: calc(100vh - #{$gutters * 2});
+  max-height: calc(100vh - #{$gutters * 2});
+  display: inline-flex;
   justify-content: space-between;
   flex-wrap: nowrap;
-  align-items: stretch;
+  box-shadow: $shadow;
+  overflow: hidden;
+  flex: 0 0 50vw;
+  border-radius: $corners;
 }
+
 .ranks {
-  width: percentage(1/8);
+  flex: 0 0 percentage(1/8);
   height: 100%;
 }
 </style>
