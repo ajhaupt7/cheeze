@@ -36,17 +36,24 @@ export default {
 @import '../assets/styles/variables.scss';
 
 .board {
-  width: 50vw;
-  height: 50vw;
-  max-width: calc(100vh - #{$gutters * 2});
-  max-height: calc(100vh - #{$gutters * 2});
-  display: inline-flex;
+  width: calc(100vw - #{$gutters * 2});
+  height: calc(100vw - #{$gutters * 2});
+  display: flex;
   justify-content: space-between;
   flex-wrap: nowrap;
   box-shadow: $shadow;
   overflow: hidden;
-  flex: 0 0 50vw;
   border-radius: $corners;
+  margin-bottom: $gutters;
+  @media (min-width: $mobile) {
+    display: inline-flex;
+    width: 50vw;
+    height: 50vw;
+    max-width: calc(100vh - #{$gutters * 2});
+    max-height: calc(100vh - #{$gutters * 2});
+    flex: 0 0 50vw;
+    margin-bottom: 0;
+  }
 }
 
 .ranks {

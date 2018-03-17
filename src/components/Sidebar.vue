@@ -22,22 +22,30 @@ export default {
 
 .sidebar {
   flex: 1;
-  display: inline-block;
-  margin-left: $gutters;
+  width: 100%;
   background: white;
   border-radius: $corners;
   box-shadow: $shadow;
+  overflow: scroll;
+  @media (min-width: $mobile) {
+    display: inline-flex;
+    flex-direction: column;
+    justify-content: space-between;
+    margin-left: $gutters;
+  }
 }
 
 header {
-  font-weight: $font-weight-thick;
   font-size: $font-size-lg;
+  text-transform: uppercase;
+  letter-spacing: 5px;
   text-align: center;
   background: $gray-dark;
   padding: $gutters;
   border-top-right-radius: $corners;
   border-top-left-radius: $corners;
   color: white;
+  transition: all 500ms $ease;
 }
 
 article {
