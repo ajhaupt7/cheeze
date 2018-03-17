@@ -4,6 +4,11 @@
     :style = "squareStyles"
     @click = "handleSquareClick"
   >
+    <transition name="current-icon" appear>
+      <div class="current-icon" :style="rankFileStyles">
+        <checkmark-icon v-if="isCurrentMove" />
+      </div>
+    </transition>
     <div
       v-if   = "displayFile"
       class  = "file"
@@ -22,7 +27,9 @@
 </template>
 
 <script>
-import { mapState } from 'vuex';
+import { mapState, mapActions, mapGetters } from 'vuex';
+import { COLORS } from '../constants';
+import CheckmarkIcon from './CheckmarkIcon';
 
 export default {
   name: 'square',
@@ -30,14 +37,21 @@ export default {
     rank: Number,
     file: String,
   },
+  components: {
+    CheckmarkIcon,
+  },
   computed: {
-    ...mapState({
-      colors: state => state.board.colors,
-      threeDee: state => state.board.threeDee,
-    }),
-    squareColor() {
-      const { dark, light } = this.colors;
-      return (this.file.charCodeAt(0) + this.rank) % 2 === 0 ? dark : light;
+    ...mapState([
+      'colors',
+    ]),
+    ...mapGetters([
+      'currentMoveId',
+    ]),
+    isCurrentMove() {
+      return this.currentMoveId === `${this.file}${this.rank}`;
+    },
+    isDark() {
+      return (this.file.charCodeAt(0) + this.rank) % 2 === 0;
     },
     displayRank() {
       return this.file === 'a';
@@ -47,15 +61,23 @@ export default {
     },
     rankFileStyles() {
       const { dark, light } = this.colors;
-      const color = this.squareColor === dark ? light : dark;
+      const color = this.isDark ? light : dark;
 
       return { color };
     },
+    squareColorType() {
+      return this.isDark ? COLORS.DARK : COLORS.LIGHT;
+    },
     squareClasses() {
-      return ['square', { shadow: this.threeDee }];
+      return ['square', { 'current-move': this.isCurrentMove }];
     },
     squareStyles() {
-      return { background: this.squareColor };
+      const { dark, light } = this.colors;
+      return {
+        background: this.isDark ? dark : light,
+      };
+    },
+  },
   methods: {
     ...mapActions([
       'registerMove',
@@ -71,12 +93,18 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import '../assets/styles/variables.scss';
+
 .square {
   width: 100%;
   height: percentage(1/8);
   position: relative;
   cursor: pointer;
-
+  transition: all 650ms $ease;
+  &.current-move {
+    box-shadow: $shadow-lg;
+    border-bottom: 5px solid rgba($gray-dark, 0.75);
+  }
   &:hover {
     &:after {
       opacity: 1;
@@ -91,7 +119,7 @@ export default {
     height: 100%;
     opacity: 0;
     background: rgba(black, 0.15);
-    transition: all 550ms cubic-bezier(0.075, 0.82, 0.165, 1);
+    transition: opacity 650ms $ease;
   }
 }
 
@@ -110,5 +138,24 @@ export default {
 .file {
   bottom: 0;
   right: 0;
+}
+
+.current-icon {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate3d(-50%, -50%, 0);
+}
+
+.current-icon-enter-active,
+.current-icon-leave-active
+{
+  transition: all 650ms $ease;
+}
+
+.current-icon-enter,
+.current-icon-leave-to {
+  opacity: 0;
+  transform: translateY(-#{$gutters * 2});
 }
 </style>
