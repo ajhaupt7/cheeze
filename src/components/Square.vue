@@ -2,6 +2,7 @@
   <div
     :class = "squareClasses"
     :style = "squareStyles"
+    @click = "handleSquareClick"
   >
     <div
       v-if   = "displayFile"
@@ -55,6 +56,15 @@ export default {
     },
     squareStyles() {
       return { background: this.squareColor };
+  methods: {
+    ...mapActions([
+      'registerMove',
+    ]),
+    handleSquareClick() {
+      this.registerMove({
+        id: `${this.file}${this.rank}`,
+        colorType: this.squareColorType,
+      });
     },
   },
 };
