@@ -31,8 +31,11 @@ export default {
 }
 
 .container {
-  display: flex;
-  align-items: stretch;
-  justify-content: center;
+  display: block;
+  @media (min-width: $mobile) {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
 }
 </style>
