@@ -1,19 +1,14 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
-import actions from './actions';
-import getters from './getters';
-import mutations from './mutations';
+import * as actions from './actions';
+import * as getters from './getters';
+import * as mutations from './mutations';
+import { INITIAL_COLORS } from '../constants';
 
 Vue.use(Vuex);
 
 const state = {
-  board: {
-    colors: {
-      light: '#efd9b7',
-      dark: '#b48866',
-    },
-    threeDee: true,
-  },
+  colors: INITIAL_COLORS,
   moves: [],
 };
 
